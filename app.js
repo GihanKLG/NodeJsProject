@@ -39,7 +39,6 @@ app.post("/", function (req, res, next) {
 
 app.get('/:id' , (req, res) => { 
     console.log(req.params.id);
-    //const id = req.param.id;
     connection.query('SELECT * FROM `blogpost` WHERE id = ?', [req.params.id], (err, result, fields) => {
         if(err) console.log(err);
         else{
@@ -48,6 +47,18 @@ app.get('/:id' , (req, res) => {
         }
     })
 })
+
+app.delete('/:id' , (req, res) => {
+    console.log(req.params.id);
+    connection.query('DELETE FROM `blogpost` WHERE id = ?', [req.params.id], (err, result, fields) =>{
+        if(err) console.log(err);
+        else{
+            var result = "Row is successfully deleted";
+            console.log("success");
+            res.json({result});
+        }
+    })
+});
 
 connection.connect((err) => {
     if (err) console.log(err);
