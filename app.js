@@ -20,7 +20,6 @@ app.get('/', (req, res) => {
 
 app.post("/", function (req, res, next) {
     console.log(req.body);
-    // console.log(req);
     const title = req.body.title;
     const content = req.body.content;
     const post = {
@@ -37,6 +36,18 @@ app.post("/", function (req, res, next) {
         }
     });
 });
+
+app.get('/:id' , (req, res) => { 
+    console.log(req.params.id);
+    //const id = req.param.id;
+    connection.query('SELECT * FROM `blogpost` WHERE id = ?', [req.params.id], (err, result, fields) => {
+        if(err) console.log(err);
+        else{
+            console.log("success");
+            res.json({result});
+        }
+    })
+})
 
 connection.connect((err) => {
     if (err) console.log(err);
