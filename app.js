@@ -48,6 +48,22 @@ app.get('/:id' , (req, res) => {
     })
 })
 
+app.put('/', (req, res) => {
+    console.log(req.body);
+    let sql = `Update blogpost 
+                SET title = ? 
+                WHERE id = ?`;
+    let data = [req.body.title, req.body.content, req.body.id];           
+    connection.query(sql, data, (err, result, fields) => {
+        if(err) console.log(err); 
+        else{
+            const result = "data update successfully";
+            console.log("success");
+            res.json({result}); 
+         }
+    })
+})
+
 app.delete('/:id' , (req, res) => {
     console.log(req.params.id);
     connection.query('DELETE FROM `blogpost` WHERE id = ?', [req.params.id], (err, result, fields) =>{
